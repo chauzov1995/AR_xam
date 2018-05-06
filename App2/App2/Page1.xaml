@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App2.Page1">
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView  x:Name="listView" ItemTapped="OnSelection">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout BackgroundColor="{Binding bg}"
+                        Orientation="Vertical">
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding komment}"
+                                TextColor="#fff" />
+                                    <StackLayout      Orientation="Horizontal"  HorizontalOptions="EndAndExpand">
+                                        <Label Text="{Binding summa}" TextColor="#503026" />
+                                        <Label Text="/"  TextColor="#503026" />
+                                        <Label Text="{Binding summa_dohod}" TextColor="#503026"  />
+                                    </StackLayout>
+                                </StackLayout>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Text="Создать"
+          Clicked="OnButtonClicked" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

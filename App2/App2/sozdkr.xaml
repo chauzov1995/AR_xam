@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App2.sozdkr">
+    <ContentPage.Content>
+        <StackLayout>
+            <Entry Placeholder="Сумма"   Keyboard="Numeric"     x:Name="summa"              />
+            <Entry Placeholder="Комментарий"          x:Name="komment"              />
+            <StackLayout Orientation="Horizontal">
+                <Picker  x:Name="picker_categ" ItemDisplayBinding="{Binding komment}"/>
+                <Picker x:Name="picker_purse" ItemDisplayBinding="{Binding komment}"/>
+            </StackLayout>
+            <DatePicker x:Name="mDatePicker"
+                    Format="d MMMM yyyy" />
+            <Button Text="Учёт"
+          Clicked="OnButtonClicked" />
+            <ListView  x:Name="listView" >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout BackgroundColor="#eee"
+                        Orientation="Vertical">
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding komment}"
+                                TextColor="#f35e20" />
+                                    <StackLayout      Orientation="Vertical"  HorizontalOptions="EndAndExpand">
+                                        <Label Text="{Binding summa}" TextColor="#503026" />
+                                        <Label Text="{Binding data_fakt}" TextColor="#503026" />
+                                    </StackLayout>
+                                </StackLayout>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
