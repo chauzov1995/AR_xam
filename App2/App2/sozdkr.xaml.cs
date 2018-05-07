@@ -14,17 +14,19 @@ namespace App2
 	public partial class sozdkr : ContentPage
 	{
         int id_dohoda;
-		public sozdkr(vis_an_dohod element)
+        vis_an_dohod categoria;
+        public sozdkr(vis_an_dohod element)
 		{
 			InitializeComponent ();
 
             this.id_dohoda = element.id;
+            categoria = element;
 
             string dbPath = DependencyService.Get<ISQLite>().GetDatabasePath("friends.db");
             var db = new SQLiteConnection(dbPath);
             var stockList = db.Query<an_dkr_hist>("SELECT * " +
            "FROM [an_dkr_hist] " +
-           "WHERE [kuda]=" + id_dohoda);
+           "WHERE [kuda]=" + id_dohoda+" and [visible]=0");
 
             this.Title = element.komment;
 
@@ -67,5 +69,36 @@ namespace App2
             await Navigation.PopAsync();
 
         }
+
+        
+
+                public async void del_activated(object sender, EventArgs args)
+        {
+            //удалим кошель
+
+       
+            string dbPath = DependencyService.Get<ISQLite>().GetDatabasePath("friends.db");
+            var db = new SQLiteConnection(dbPath);
+
+            db.Query<an_dohod>("UPDATE [an_dohod] SET [visible]=1 " +
+           "WHERE [id]="+ id_dohoda.ToString());
+
+
+
+            await Navigation.PopAsync();
+
+        }
+
+        public async void red_activated(object sender, EventArgs args)
+        {
+            //редактировать кошель
+
+
+            var detailPage = new Page2(categoria);
+            await Navigation.PushAsync(detailPage);
+
+        }
+
+        
     }
 }

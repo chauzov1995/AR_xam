@@ -31,7 +31,8 @@ namespace App2
 
             var stockList = db.Query<vis_an_dohod>("SELECT a.[id], a.[name_dohod], b.summa, a.[summa_dohod], a.[komment] " +
                 "FROM [an_dohod] a " +
-                "LEFT JOIN ( SELECT SUM([summa]) summa,[kuda] FROM [an_dkr_hist] GROUP BY [kuda]) b ON  a.[id]=b.[kuda]");
+                "LEFT JOIN ( SELECT SUM([summa]) summa,[kuda] FROM [an_dkr_hist] GROUP BY [kuda]) b ON  a.[id]=b.[kuda] "+
+                "WHERE a.[visible]=0");
 
             var newspis = new List<vis_an_dohod>();
             foreach (vis_an_dohod elem in stockList)
@@ -84,9 +85,9 @@ namespace App2
 
             //((ListView)sender).SelectedItem = null; //uncomment line if you want to disable the visual selection state.
         }
-        public async void OnButtonClicked(object sender, EventArgs args)
+        public async void MenuItem1_Activated(object sender, EventArgs args)
         {
-            var detailPage = new Page2();
+            var detailPage = new Page2(null);
             await Navigation.PushAsync(detailPage);
 
         }

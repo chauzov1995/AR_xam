@@ -2,13 +2,13 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="App2.Purse_add">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="MenuItem1" Order="Primary" Icon="Microsoft.png" Text="Сохранить" Priority="0" Activated="OnButtonClicked"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout>
             <Entry Placeholder="Название кошелька"        x:Name="komment"              />
             <Entry Placeholder="Текущяя сумма" Keyboard="Numeric"         x:Name="summa"              />
-           
-
-            <Button Text="Создать" Clicked="OnButtonClicked" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

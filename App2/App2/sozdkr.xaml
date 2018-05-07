@@ -2,6 +2,10 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="App2.sozdkr">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="MenuItem1" Order="Secondary" Icon="Microsoft.png" Text="Редактировать" Priority="0" Activated="red_activated"/>
+        <ToolbarItem Name="MenuItem2" Order="Secondary" Icon="Xamarin.png" Text="Удалить" Priority="1" Activated="del_activated"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout>
             <Entry Placeholder="Сумма"   Keyboard="Numeric"     x:Name="summa"              />
@@ -14,6 +18,8 @@
                     Format="d MMMM yyyy" />
             <Button Text="Учёт"
           Clicked="OnButtonClicked" />
+       
+            
             <ListView  x:Name="listView" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
