@@ -29,7 +29,7 @@ namespace App2
 
             Detail = new NavigationPage(page);
             IsPresented = false;
-
+            
             MasterPage.ListView.SelectedItem = null;
         }
     }

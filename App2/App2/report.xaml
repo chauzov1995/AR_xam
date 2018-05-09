@@ -4,9 +4,25 @@
              x:Class="App2.report">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <ListView  x:Name="listView" >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout BackgroundColor="#eee"
+                        Orientation="Vertical">
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding komment}"
+                                TextColor="#f35e20" />
+                                    <StackLayout      Orientation="Vertical"  HorizontalOptions="EndAndExpand">
+                                        <Label Text="{Binding summa}" TextColor="#503026" />
+                                        <Label Text="{Binding data_fakt}" TextColor="#503026" />
+                                    </StackLayout>
+                                </StackLayout>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

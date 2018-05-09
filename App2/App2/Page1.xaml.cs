@@ -21,6 +21,12 @@ namespace App2
         public Page1()
         {
             InitializeComponent();
+
+            Subscribe();
+            load_page();
+        }
+            void load_page(){ 
+
             string dbPath = DependencyService.Get<ISQLite>().GetDatabasePath("friends.db");
             var db = new SQLiteConnection(dbPath);
             db.CreateTable<an_dohod>();
@@ -65,7 +71,7 @@ namespace App2
 
 
 
-
+           
         }
 
         async void OnSelection(object sender, ItemTappedEventArgs e)
@@ -87,13 +93,51 @@ namespace App2
         }
         public async void MenuItem1_Activated(object sender, EventArgs args)
         {
-            var detailPage = new Page2(null);
+            var detailPage = new Page2(0);
             await Navigation.PushAsync(detailPage);
 
         }
 
 
+                     public async void del_activated(object sender, EventArgs args)
+        {
+            //удалим кошель
+            var mi = ((MenuItem)sender);
+            int id = Convert.ToInt32(mi.CommandParameter);
 
+          
+            bool result = await DisplayAlert("Подтвердите действие", "Вы действительно хотите удалить ?" + id, "Ок", "Отмена");
+            if (result)
+            {
+                string dbPath = DependencyService.Get<ISQLite>().GetDatabasePath("friends.db");
+                var db = new SQLiteConnection(dbPath);
+                db.Query<an_dohod>("UPDATE [an_dohod] SET [visible]=1 " +
+          "WHERE [id]=" + id.ToString());
+                load_page();
+            }
+
+        }
+
+        public async void red_activated(object sender, EventArgs args)
+        {
+            //редактировать кошель
+            var mi = ((MenuItem)sender);
+            int id = Convert.ToInt32(mi.CommandParameter);
+
+            var detailPage = new Page2(id);
+            await Navigation.PushAsync(detailPage);
+
+        }
+
+
+        private void Subscribe()
+        {
+            MessagingCenter.Subscribe<ContentPage>(
+                this, // кто подписывается на сообщения
+                "LabelChange",   // название сообщения
+                (sender) => { load_page(); });    // вызываемое действие
+
+        }
 
 
     }

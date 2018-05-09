@@ -11,40 +11,25 @@ using Xamarin.Forms.Xaml;
 
 namespace App2
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class Purse : ContentPage
-	{
-		public Purse ()
-		{
-			InitializeComponent ();
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class Purse : ContentPage
+    {
 
+        public Purse()
+        {
+            InitializeComponent();
 
+            Subscribe();
+            load_page();
+        }
+        void load_page()
+        {
             string dbPath = DependencyService.Get<ISQLite>().GetDatabasePath("friends.db");
             var db = new SQLiteConnection(dbPath);
 
 
             var stockList = db.Query<an_purse>("SELECT * " +
-            "FROM [an_purse] ");
-
-
-
-
-            var moreAction = new MenuItem { Text = "More" };
-            moreAction.SetBinding(MenuItem.CommandParameterProperty, new Binding("."));
-            moreAction.Clicked += async (sender, e) => {
-                var mi = ((MenuItem)sender);
-                Debug.WriteLine("More Context Action clicked: " + mi.CommandParameter);
-            };
-
-            var deleteAction = new MenuItem { Text = "Delete", IsDestructive = true }; // red background
-            deleteAction.SetBinding(MenuItem.CommandParameterProperty, new Binding("."));
-            deleteAction.Clicked += async (sender, e) => {
-                var mi = ((MenuItem)sender);
-                Debug.WriteLine("Delete Context Action clicked: " + mi.CommandParameter);
-            };
-            // add to the ViewCell's ContextActions property
-            //ContextActions.Add(moreAction);
-           // ContextActions.Add(deleteAction);
+            "FROM [an_purse] WHERE [visible]=0");
 
 
             listView.ItemsSource = stockList;
@@ -52,21 +37,49 @@ namespace App2
 
         public async void OnButtonClicked(object sender, EventArgs args)
         {
-            var detailPage = new Purse_add();
+            var detailPage = new Purse_add(0);
             await Navigation.PushAsync(detailPage);
 
         }
 
-        public void OnMore(object sender, EventArgs e)
+        public async void OnMore(object sender, EventArgs e)
         {
+            //обновить
             var mi = ((MenuItem)sender);
-            DisplayAlert("More Context Action", mi.CommandParameter + " more context action", "OK");
+            int id = Convert.ToInt32(mi.CommandParameter);
+
+            var detailPage = new Purse_add(id);
+            await Navigation.PushAsync(detailPage);
         }
 
-        public void OnDelete(object sender, EventArgs e)
+        public async void OnDelete(object sender, EventArgs e)
         {
+            //удалить
             var mi = ((MenuItem)sender);
-            DisplayAlert("Delete Context Action", mi.CommandParameter + " delete context action", "OK");
+            int id = Convert.ToInt32(mi.CommandParameter);
+
+
+            bool result = await DisplayAlert("Подтвердите действие", "Вы действительно хотите удалить ?" + id, "Ок", "Отмена");
+            if (result)
+            {
+                string dbPath = DependencyService.Get<ISQLite>().GetDatabasePath("friends.db");
+                var db = new SQLiteConnection(dbPath);
+                db.Query<vis_an_dohod>("UPDATE [an_purse] SET [visible]=1 WHERE [id]=" + id);
+                load_page();
+            }
+
+
+
+
+        }
+
+        private void Subscribe()
+        {
+            MessagingCenter.Subscribe<ContentPage>(
+                this, // кто подписывается на сообщения
+                "LabelChange",   // название сообщения
+                (sender) => { load_page(); });    // вызываемое действие
+
         }
     }
 }

@@ -9,10 +9,7 @@ namespace App2
 
     public class MasterDetailPage1MenuItem
     {
-        public MasterDetailPage1MenuItem()
-        {
-            TargetType = typeof(MasterDetailPage1Detail);
-        }
+      
         public int Id { get; set; }
         public string Title { get; set; }
 

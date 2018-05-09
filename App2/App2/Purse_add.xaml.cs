@@ -13,13 +13,29 @@ namespace App2
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Purse_add : ContentPage
     {
-        public Purse_add()
+        int idelem;
+        public Purse_add(int id)
         {
             InitializeComponent();
 
 
             this.Title = "Создаём кошелёк";
+            this.idelem = id;
+            if (id == 0)
+            {//значит новый
 
+            }
+            else
+            {
+                string dbPath = DependencyService.Get<ISQLite>().GetDatabasePath("friends.db");
+                var db = new SQLiteConnection(dbPath);
+
+
+                an_purse element = db.Query<an_purse>("SELECT * " +
+                "FROM [an_purse] WHERE id="+id).First();
+                komment.Text = element.komment;
+                    summa.Text = element.summa;
+            }
 
 
         }
@@ -29,10 +45,16 @@ namespace App2
             
             string dbPath = DependencyService.Get<ISQLite>().GetDatabasePath("friends.db");
             var db = new SQLiteConnection(dbPath);
-            db.Insert(new an_purse { komment = komment.Text,  summa = summa.Text, data_fakt = faktdata.Get(DateTime.Now) }); // after creating the newStock object
+            if (idelem == 0)
+            {
+                db.Insert(new an_purse { komment = komment.Text, summa = summa.Text, data_fakt = faktdata.Get(DateTime.Now) }); // after creating the newStock object
+            }
+            else
+            {
+                db.Query<vis_an_dohod>("UPDATE [an_purse] SET [komment]='"+ komment.Text + "', [summa]="+ summa.Text + " WHERE [id]=" + idelem);
+            }
 
-
-
+            MessagingCenter.Send<ContentPage>(this, "LabelChange");
             await Navigation.PopAsync();
 
         }

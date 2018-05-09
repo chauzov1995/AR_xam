@@ -3,23 +3,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="App2.Purse">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="MenuItem1" Order="Primary" Icon="Microsoft.png" Text="Создать" Priority="0" Activated="OnButtonClicked"/>
+        <ToolbarItem Name="MenuItem1" Order="Primary" Icon="baseline_add_white_24" Text="Создать" Priority="0" Activated="OnButtonClicked"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout>
             <ListView  x:Name="listView" >
-              
+
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.ContextActions>
-                                <MenuItem Clicked="OnMore" CommandParameter="{Binding .}"
-               Text="More" />
-                                <MenuItem Clicked="OnDelete" CommandParameter="{Binding .}"
-               Text="Delete" IsDestructive="True" />
+
+                                <MenuItem Clicked="OnMore" CommandParameter="{Binding id}"
+               Text="Редактировать" />
+                                <MenuItem Clicked="OnDelete" CommandParameter="{Binding id}"
+               Text="Удалить" IsDestructive="True" />
                             </ViewCell.ContextActions>
-                            <StackLayout
-                        Orientation="Vertical">
+                            <ViewCell.View>
+
                                 <StackLayout Orientation="Horizontal">
                                     <Label Text="{Binding komment}"
                                 TextColor="#67c" />
@@ -28,7 +29,8 @@
 
                                     </StackLayout>
                                 </StackLayout>
-                            </StackLayout>
+
+                            </ViewCell.View>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

@@ -3,13 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="App2.Page2">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="MenuItem1" Order="Primary" Icon="Microsoft.png" Text="Сохранить" Priority="0" Activated="OnButtonClicked"/>
+        <ToolbarItem Name="MenuItem1" Order="Primary" Icon="baseline_done_all_white_24" Text="Сохранить" Priority="0" Activated="OnButtonClicked"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout>
             <Entry Placeholder="Название"        x:Name="komment"              />
             <Entry Placeholder="Начальная сумма" Keyboard="Numeric"         x:Name="summa"              />
-            <Picker x:Name="picker"  />
+            <Picker x:Name="picker" Title="Выбирите" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

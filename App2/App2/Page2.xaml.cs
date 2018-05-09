@@ -13,14 +13,14 @@ namespace App2
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Page2 : ContentPage
     {
-        vis_an_dohod categoria;
+        int idelem;
 
-        public Page2(vis_an_dohod categoria)
+        public Page2(int  id)
         {
             InitializeComponent();
 
             this.Title = "Создаём категорию";
-            this.categoria = categoria;
+            this.idelem = id;
 
 
             var monkeyList = new List<string>();
@@ -31,16 +31,24 @@ namespace App2
 
             picker.ItemsSource = monkeyList;
 
-            if (categoria != null)
-            {
-                komment.Text = categoria.komment;
-                summa.Text = categoria.summa;
-                picker.SelectedIndex = categoria.name_dohod - 1;
+
+            if (id == 0)
+            {//значит новый
+              //  picker.SelectedIndex = 0;
             }
             else
             {
-                picker.SelectedIndex = 0;
+                string dbPath = DependencyService.Get<ISQLite>().GetDatabasePath("friends.db");
+                var db = new SQLiteConnection(dbPath);
+
+
+                an_dohod categoria = db.Query<an_dohod>("SELECT * " +
+                "FROM [an_dohod] WHERE id=" + id).First();
+                komment.Text = categoria.komment;
+                summa.Text = categoria.summa_dohod;
+                picker.SelectedIndex = categoria.name_dohod - 1;
             }
+          
 
 
 
@@ -57,17 +65,17 @@ namespace App2
 
             string dbPath = DependencyService.Get<ISQLite>().GetDatabasePath("friends.db");
             var db = new SQLiteConnection(dbPath);
-            if (categoria == null)
+            if (idelem == 0)
             {
                 db.Insert(new an_dohod { komment = komment.Text, name_dohod = namedohod, summa_dohod = summa.Text, data_fakt = faktdata.Get(DateTime.Now) }); // after creating the newStock object
             }
             else
             {
                 db.Query<vis_an_dohod>("UPDATE [an_dohod] SET [komment]='" + komment.Text + "', [name_dohod]=" + namedohod + ", [summa_dohod]=" + summa.Text +
-                  " WHERE [id]=" + categoria.id);
+                  " WHERE [id]=" + idelem.ToString());
             }
 
-
+            MessagingCenter.Send<ContentPage>(this, "LabelChange");
             await Navigation.PopAsync();
 
         }

@@ -33,7 +33,6 @@ namespace App2
             {
                 MenuItems = new ObservableCollection<MasterDetailPage1MenuItem>(new[]
                 {
-                    new MasterDetailPage1MenuItem { Id = 0, Title = "Категории", TargetType = typeof(Page1) },
                     new MasterDetailPage1MenuItem { Id = 1, Title = "Кошельки",  TargetType = typeof(Purse) },
                     new MasterDetailPage1MenuItem { Id = 2, Title = "Отчёт по дням",  TargetType = typeof(report) },
                   

@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="App2.Page1">
+             x:Class="App2.Page1" Title="Категории">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="MenuItem1" Order="Primary" Icon="Microsoft.png" Text="Создать" Priority="0" Activated="MenuItem1_Activated"/>
+        <ToolbarItem Name="MenuItem1" Order="Primary" Icon="baseline_add_white_24" Text="Создать" Priority="0" Activated="MenuItem1_Activated"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout>
@@ -11,23 +11,34 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout BackgroundColor="{Binding bg}"
-                        Orientation="Vertical">
-                                <StackLayout Orientation="Horizontal">
-                                    <Label Text="{Binding komment}"
-                                TextColor="#fff" />
-                                    <StackLayout      Orientation="Horizontal"  HorizontalOptions="EndAndExpand">
-                                        <Label Text="{Binding summa}" TextColor="#503026" />
-                                        <Label Text="/"  TextColor="#503026" />
-                                        <Label Text="{Binding summa_dohod}" TextColor="#503026"  />
+                            <ViewCell.ContextActions>
+
+                                <MenuItem Clicked="red_activated" CommandParameter="{Binding id}"
+               Text="Редактировать" />
+                                <MenuItem Clicked="del_activated" CommandParameter="{Binding id}"
+               Text="Удалить" IsDestructive="True" />
+                            </ViewCell.ContextActions>
+                            <ViewCell.View>
+                                <StackLayout Orientation="Horizontal" Padding="4,0">
+                                    <StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand">
+                                        <Label Text="{Binding komment}" TextColor= "{Binding bg}" />
+                                        <Label Text="Доход" TextColor="White" BackgroundColor= "{Binding bg}" HorizontalOptions="Start" FontSize="Micro" />
+                                        </StackLayout>
+                                            <StackLayout      Orientation="Vertical"  HorizontalOptions="End">
+                                        <StackLayout HorizontalOptions="End" Orientation="Horizontal" Spacing="0">
+                                            <Label Text="{Binding summa}"  TextColor= "{Binding bg}"   />
+                                            <Label Text=" р."  TextColor="{Binding bg}"  />
+                                        </StackLayout>
+                                        <Label Text="{Binding summa_dohod}"  TextColor="#503026" FontSize="Micro"  HorizontalOptions="End" />
                                     </StackLayout>
                                 </StackLayout>
-                            </StackLayout>
+
+                            </ViewCell.View>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-           
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
